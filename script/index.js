@@ -15,9 +15,6 @@ const loadbutton =(id)=>{
 
 };
 
-
-
-
 // create load catagory
 const loadcatagory = () =>{
     fetch("https://openapi.programming-hero.com/api/phero-tube/categories")
@@ -38,6 +35,24 @@ const loadvideo = () =>{
 const displayvideo =(videos)=>{
     const videoContainer = document.getElementById('video');
     videoContainer.innerHTML = "";
+
+    if(videos.length === 0){
+        videoContainer.classList.remove('grid');
+        videoContainer.innerHTML = `
+            <div class="min-h-[300px] flex flex-col gap-5 justify-center items-center">
+                <img src="./assets/Icon.png" alt="">
+                <h2 class="font-bold text-center text-xl">NO CONTAIN HERE IN THIS CATEGORY!</h2>
+            </div>`;
+        return;
+    }else{
+        videoContainer.classList.add("grid");
+    };
+
+
+
+
+
+
     videos.forEach((video) => {
 
         // create cards
