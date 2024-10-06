@@ -12,7 +12,7 @@ const removeActiveClass =()=>{
     for(btn of button){
         btn.classList.remove('active')
     }
-}
+};
 
 const loadbutton =(id)=>{
     fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
@@ -29,6 +29,22 @@ const loadbutton =(id)=>{
 
 };
 
+const loaddetails= async(videoId)=>{
+    const uri = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`;
+    const res = await fetch(uri);
+    const data = await res.json();
+    displaydetails(data.video)
+};
+const displaydetails = (video)=>{
+    const modalcontainer = document.getElementById('modal-content');
+    modalcontainer.innerHTML=`
+    <img src=${video.thumbnail} alt="">
+    <p>${video.description}</p>
+    `;
+    // show modal
+    document.getElementById("customModal").showModal();
+}
+
 // create load catagory
 const loadcatagory = () =>{
     fetch("https://openapi.programming-hero.com/api/phero-tube/categories")
@@ -37,6 +53,7 @@ const loadcatagory = () =>{
         .catch(error => console.log(error))
 
 };
+
 // create load video cetagory
 const loadvideo = () =>{
     fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
@@ -45,6 +62,7 @@ const loadvideo = () =>{
         .catch(error => console.log(error))
 
 };
+
 // display video cetagory
 const displayvideo =(videos)=>{
     const videoContainer = document.getElementById('video');
@@ -82,7 +100,7 @@ const displayvideo =(videos)=>{
                  <p class="text-gray-400">${video.authors[0].profile_name}</p>
                   ${video.authors[0].verified === true ? '<img class="w-5" src="https://img.icons8.com/?size=96&id=D9RtvkuOe31p&format=png" alt="">':''}
                 </div>
-                <p></p>
+                <p> <button onclick="loaddetails('${video.video_id}')" class="btn btn-sm btn-error">details</button></p>
             </div>
         </div>
         `;
@@ -91,6 +109,7 @@ const displayvideo =(videos)=>{
 
     });
 };
+
 // create display catagory
 const displaycatagory =(categories)=>{
     const cetegoryContainer = document.getElementById("cetegory-container");
@@ -109,26 +128,3 @@ const displaycatagory =(categories)=>{
 loadcatagory();
 loadvideo();
 
-
-// {
-//     "status": true,
-//     "message": "Successfully fetched all the videos with category id '1001'",
-//     "category": [
-//       {
-//         "category_id": "1001",
-//         "video_id": "aaaa",
-//         "thumbnail": "https://i.ibb.co/L1b6xSq/shape.jpg",
-//         "title": "Shape of You",
-//         "authors": [
-//           {
-//             "profile_picture": "https://i.ibb.co/D9wWRM6/olivia.jpg",
-//             "profile_name": "Olivia Mitchell",
-//             "verified": ""
-//           }
-//         ],
-//         "others": {
-//           "views": "100K",
-//           "posted_date": "16278"
-//         },
-//         "description": "Dive into the rhythm of 'Shape of You,' a captivating track that blends pop sensibilities with vibrant beats. Created by Olivia Mitchell, this song has already gained 100K views since its release. With its infectious melody and heartfelt lyrics, 'Shape of You' is perfect for fans looking for an uplifting musical experience. Let the music take over as Olivia's vocal prowess and unique style create a memorable listening journey."
-//       },
